@@ -24,6 +24,12 @@ func sum256(s string) []byte {
 	return h.Sum(nil)
 }
 
+func sum256Bytes(s []byte) []byte {
+	h := sha256.New()
+	h.Write(s)
+	return h.Sum(nil)
+}
+
 // Ordered Devices by Path
 type Devices []*hid.DeviceInfo
 
@@ -88,7 +94,7 @@ func Execute() {
 }
 
 func init() {
-	RootCmd.PersistentFlags().StringVar(&challengeFlag, "challenge", "", "Challenge(string)")
+	RootCmd.PersistentFlags().StringVar(&challengeFlag, "challenge", "", "Challenge(base64 string)")
 	RootCmd.PersistentFlags().StringVar(&appIDFlag, "appid", "", "Applicaiton ID(string)")
 	RootCmd.PersistentFlags().StringVar(&keyHandleFlag, "keyhandle", "", "Key Handle ID(base64 string)")
 	RootCmd.PersistentFlags().StringVar(&publicKeyFlag, "publickey", "", "Public Key of the signer")

@@ -35,7 +35,13 @@ var sigCmd = &cobra.Command{
 		}
 
 		appIDHash := sum256(appIDFlag)
-		challengeHash := sum256(challengeFlag)
+
+		challengeBytes, err := base64.RawURLEncoding.DecodeString(challengeFlag)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Challenge is not valid url encoded base64")
+		}
+
+		challengeHash := sum256Bytes(challengeBytes)
 
 		keyHandleBytes, err := base64.RawURLEncoding.DecodeString(keyHandleFlag)
 		if err != nil {
